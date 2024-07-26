@@ -21,7 +21,6 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             // 'author' => $this->Auth()->user()->name,
-            'message' => 'Post Created Successfully',
         ];
     }
 }
