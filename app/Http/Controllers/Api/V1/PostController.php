@@ -48,6 +48,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+
         return new PostResource($post);
     }
 
@@ -57,7 +58,10 @@ class PostController extends Controller
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
-        $post->update($request->all());
+        $post->update($request->only(['title', 'description', 'category_id']));
+        if ($request->has('tags')) {
+            $post->tags()->sync($request->tags);
+        }
         return response()->json([
             'message' => 'Post Updated Successfully'
         ], 200);

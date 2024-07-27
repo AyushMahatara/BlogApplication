@@ -6,7 +6,7 @@ This is a BlogApplication, RESTful API made using Laravel where the users are al
 -   Role-based access control using Spatie [laravel-permission package](https://spatie.be/docs/laravel-permission/v6/basic-usage/middleware).
 -   API endpoint for CRUD operation of Users, Posts, Categories, Tags and Comments.
 -   Polymorphic relationships between users and posts, and posts and tags.
--   search feature using [Laravel-query-builder](https://spatie.be/docs/laravel-query-builder/v5/introduction)
+-   Search feature using [Laravel-query-builder](https://spatie.be/docs/laravel-query-builder/v5/introduction)
 -   Used Middleware, Roles-permissions and Policies for restrictions.
 
 ## Installation Steps
@@ -50,15 +50,15 @@ Follow this instructions to install the project on your machine:
 -   User who created post can delete any comment on his/her posts.
 -   Admin are also bound with this two points but admin is the one who can CRUD Category and Tags.
 
-#### Note: use method GET in index, POST in store and update, PUT or PATCH in update, DELETE in delete
+#### Note: use method `GET` in index, `POST` in store and update, `PUT` or `PATCH` in update, `DELETE` in delete
 
 ### Post URL
 
 -   For post index `http://127.0.0.1:8000/api/posts`
 -   For post store `http://127.0.0.1:8000/api/posts`
+    for storing post
 
 ```bash
-for storing post
  {
  "title": "post title",
  "description": "post description",
@@ -75,9 +75,9 @@ for storing post
 
 -   For category index `http://127.0.0.1:8000/api/category`
 -   For category store `http://127.0.0.1:8000/api/category`
+    for storing category
 
 ```bash
-for storing category
  {
 "name": "name"
  }
@@ -91,9 +91,9 @@ for storing category
 
 -   For tags index `http://127.0.0.1:8000/api/tags`
 -   For tags store `http://127.0.0.1:8000/api/tags`
+    for storing tags
 
 ```bash
-for storing tags
  {
 "name": "name"
  }
@@ -107,9 +107,9 @@ for storing tags
 
 -   For user index `http://127.0.0.1:8000/api/users`
 -   For user store `http://127.0.0.1:8000/api/users`
+    for storing user
 
 ```bash
-for storing user
  {
    "name": "user name",
     "email": "example@gmail.com",
@@ -125,9 +125,9 @@ for storing user
 
 -   For comment store `http://127.0.0.1:8000/api/posts/{post}/comments`
 -   For comment show `http://127.0.0.1:8000/api/comment/{id}`
+    for storing comment
 
 ```bash
-for storing comment
  {
  "feedback": "comment by 28"
  }
@@ -138,9 +138,11 @@ for storing comment
 
 ### Filtering Post
 
--   `http://127.0.0.1:8000/api/posts?filter[title]=&filter[category.name]=&filter[tags.name]=&filter[user.name]=
-`
--   For filtering according to Post Title `filter[title]=`
--   For filtering according to Category Name `filter[category.name]=`
--   For filtering according to Tags Name `filter[tags.name]=`
--   For filtering according to User Name `filter[user.name]=`
+```bash
+http://127.0.0.1:8000/api/posts?filter[title]=&filter[category.name]=&filter[tags.name]=&filter[user.name]=
+```
+
+-   For filtering according to Post Title `filter[title]=` post title
+-   For filtering according to Category Name `filter[category.name]=` category name
+-   For filtering according to Tags Name `filter[tags.name]=` tag name
+-   For filtering according to Author Name `filter[user.name]=` user name
