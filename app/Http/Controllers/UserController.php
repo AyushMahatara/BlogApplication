@@ -54,7 +54,7 @@ class UserController extends Controller
         if (auth()->check() && auth()->user()->hasRole('admin'))
             $user->delete();
         else
-            return response()->json(['message' => 'You are not Authorize successfully'], 403);
+            return response()->json(['message' => 'You are not Authorize'], 403);
 
         return response()->json(['message' => 'Post deleted successfully']);
     }

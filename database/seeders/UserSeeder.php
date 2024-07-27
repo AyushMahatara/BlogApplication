@@ -55,15 +55,6 @@ class UserSeeder extends Seeder
         // providing permission
         $permissions = Permission::all();
         $admin_role->syncPermissions($permissions);
-        // $admin_role->givePermissionTo(
-        //     [
-        //         $user_list,
-        //         $user_create,
-        //         $user_view,
-        //         $user_update,
-        //         $user_delete
-        //     ]
-        // );
 
         $author_role->givePermissionTo(
             [
@@ -87,12 +78,5 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
         $admin->assignRole($admin_role);
-
-        // $user = User::create([
-        //     'name' => 'author1',
-        //     'email' => 'author1@gmail.com',
-        //     'password' => bcrypt('password')
-        // ]);
-        // $user->assignRole($author_role);
     }
 }

@@ -66,6 +66,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        //checking if the user is the one that created the post
         if ($post->user_id !== auth()->id()) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
