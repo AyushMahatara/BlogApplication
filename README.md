@@ -1,66 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Laravel BlogApplication
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a BlogApplication, RESTful API made using Laravel where the users are allowed to store, update, delete, view posts along with the ability to search and filter. Some features are as follows:
 
-## About Laravel
+-   Authentication functionality using Laravel's [Sanctum](https://laravel.com/docs/11.x/sanctum#main-content) for Token-Based API authentication.
+-   Role-based access control using Spatie [laravel-permission package](https://spatie.be/docs/laravel-permission/v6/basic-usage/middleware).
+-   API endpoint for CRUD operation of Users, Posts, Categories, Tags and Comments.
+-   Polymorphic relationships between users and posts, and posts and tags.
+-   search feature using [Laravel-query-builder](https://spatie.be/docs/laravel-query-builder/v5/introduction)
+-   Used Middleware, Roles-permissions and Policies for restrictions.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation Steps
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Follow this instructions to install the project on your machine:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone this repo.
+    ```bash
+     git clone https://github.com/AyushMahatara/BlogApplication.git
+    ```
+2. `cd BlogApplication`
+3. `composer install`
+4. `copy and paste .env.example`
+5. `rename the copied file '.env copy.example' to '.env'`
+6. `php artisan key:generate`
+7. Set **database config** on `.env` file `optional`
+8. `php artisan migrate --seed`
+9. `php artisan serve`
+10. Open postman and hit the url.
 
-## Learning Laravel
+#### Note: While you seed in the database two categories and tags with one admin is created.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Authentication URL
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   For login `http://127.0.0.1:8000/api/auth/login`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    1. Provide admin credentials i.e., email `admin@gmail.com` and password `password`
+    2. Token will be provided use it for performing all the task.
 
-## Laravel Sponsors
+-   For register `http://127.0.0.1:8000/api/auth/register`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    1. Provide name, email and password.
+    2. Token will be provided use it for performing all the task.
+    3. You be be assigned as author.
 
-### Premium Partners
+-   To logout `http://127.0.0.1:8000/api/auth/logout`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### Restrictions:
 
-## Contributing
+-   User can perform CRUD operations for only Posts and Comments that they created.
+-   User who created post can delete any comment on his/her posts.
+-   Admin are also bound with this two points but admin is the one who can CRUD Category and Tags.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Note: use method GET in index, POST in store and update, PUT or PATCH in update, DELETE in delete
 
-## Code of Conduct
+### Post URL
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   For post index `http://127.0.0.1:8000/api/posts`
+-   For post store `http://127.0.0.1:8000/api/posts`
 
-## Security Vulnerabilities
+```bash
+for storing post
+ {
+ "title": "post title",
+ "description": "post description",
+ "category_id": 1,
+ "tags": [1,2]
+ }
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   For post show `http://127.0.0.1:8000/api/posts/{id}`
+-   For post update `http://127.0.0.1:8000/api/posts/{id}`
+-   For post delete `http://127.0.0.1:8000/api/posts/{id}`
 
-## License
+### Category URL
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   For category index `http://127.0.0.1:8000/api/category`
+-   For category store `http://127.0.0.1:8000/api/category`
+
+```bash
+for storing category
+ {
+"name": "name"
+ }
+```
+
+-   For category show `http://127.0.0.1:8000/api/category/{id}`
+-   For category update `http://127.0.0.1:8000/api/category/{id}`
+-   For category delete `http://127.0.0.1:8000/api/category/{id}`
+
+### Tags URL
+
+-   For tags index `http://127.0.0.1:8000/api/tags`
+-   For tags store `http://127.0.0.1:8000/api/tags`
+
+```bash
+for storing tags
+ {
+"name": "name"
+ }
+```
+
+-   For tags show `http://127.0.0.1:8000/api/tags/{id}`
+-   For tags update `http://127.0.0.1:8000/api/tags/{id}`
+-   For tags delete `http://127.0.0.1:8000/api/tags/{id}`
+
+### User URL
+
+-   For user index `http://127.0.0.1:8000/api/users`
+-   For user store `http://127.0.0.1:8000/api/users`
+
+```bash
+for storing user
+ {
+   "name": "user name",
+    "email": "example@gmail.com",
+    "password": "password"
+ }
+```
+
+-   For user show `http://127.0.0.1:8000/api/users/{id}`
+-   For user update `http://127.0.0.1:8000/api/users/{id}`
+-   For user delete `http://127.0.0.1:8000/api/users/{id}`
+
+### Comment URL
+
+-   For comment store `http://127.0.0.1:8000/api/posts/{post}/comments`
+-   For comment show `http://127.0.0.1:8000/api/comment/{id}`
+
+```bash
+for storing comment
+ {
+ "feedback": "comment by 28"
+ }
+```
+
+-   For comment update `http://127.0.0.1:8000/api/comment/{id}`
+-   For comment delete `http://127.0.0.1:8000/api/comment/{id}`
+
+### Filtering Post
+
+-   `http://127.0.0.1:8000/api/posts?filter[title]=&filter[category.name]=&filter[tags.name]=&filter[user.name]=
+`
+-   For filtering according to Post Title `filter[title]=`
+-   For filtering according to Category Name `filter[category.name]=`
+-   For filtering according to Tags Name `filter[tags.name]=`
+-   For filtering according to User Name `filter[user.name]=`
