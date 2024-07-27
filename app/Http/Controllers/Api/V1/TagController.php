@@ -14,7 +14,7 @@ class TagController extends Controller
 {
     public function index()
     {
-        return new TagCollection(Tag::all());
+        return new TagCollection(Tag::paginate());
     }
 
     public function store(StoreTagRequest $request)

@@ -15,7 +15,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        return new UserCollection(User::all());
+        $users = User::paginate(10);
+        return new UserCollection($users);
     }
 
     public function store(StoreUserRequest $request)

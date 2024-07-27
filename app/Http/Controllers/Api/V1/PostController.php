@@ -17,7 +17,7 @@ class PostController extends Controller
 {
     public function index(Request $request)
     {
-        // return new PostCollection(Post::all());
+        $queryParams = $request->except('page');
         $posts = QueryBuilder::for(Post::class)
             ->allowedIncludes(['category', 'tags', 'user'])
             ->allowedFilters([
@@ -26,10 +26,8 @@ class PostController extends Controller
                 'tags.name',
                 'user.name'
             ])
-            ->get();
+            ->paginate()->appends($queryParams);;
         return new PostCollection($posts);
-
-        // return new PostCollection($posts->paginate()->appends($request->query()));
     }
 
     public function store(StorePostRequest $request)
@@ -46,7 +44,6 @@ class PostController extends Controller
             $post->tags()->attach($request->tags);
         }
         return new PostResource($post);
-        // return new PostResource(Post::create($request->all()));
     }
 
     public function show(Post $post)
