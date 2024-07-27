@@ -51,13 +51,6 @@ class AuthController extends Controller
             }
 
             return new UserResource($user);
-
-            // return response()->json([
-            //     'status' => true,
-            //     'message' => 'User Created Successfully',
-            //     'token' => $user->createToken("API TOKEN")->plainTextToken
-            // ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -107,5 +100,14 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function logoutUser(Request $request)
+    {
+        Auth::logout();
+        return response()->json([
+            'status' => true,
+            'message' => 'User Logout Successfully'
+        ], 200);
     }
 }
