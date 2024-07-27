@@ -20,7 +20,10 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            // 'author' => $this->Auth()->user()->name,
+            'author' => $this->user->name,
+            'category' => new CategoryResource($this->category),
+            'tags' => TagResource::collection($this->tags),
+            'comments' => CommentResource::collection($this->comments),
         ];
     }
 }

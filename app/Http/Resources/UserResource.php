@@ -18,7 +18,7 @@ class UserResource extends JsonResource
 
         return [
             'user_id' => $this->id,
-            'name'    => $this->nae,
+            'name'    => $this->name,
             'email'   => $this->email,
             'token'   => $this->createToken("Token")->plainTextToken,
             'roles' => $this->roles->pluck('name') ?? [],

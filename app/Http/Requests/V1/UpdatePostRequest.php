@@ -17,7 +17,7 @@ class UpdatePostRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule','array<mixed>','string>
      */
     public function rules(): array
     {
@@ -26,12 +26,18 @@ class UpdatePostRequest extends FormRequest
 
             return [
                 'title' => ['required'],
-                'description' => ['required']
+                'description' => ['required'],
+                'category_id' => ['required', 'exists:categories,id'],
+                'tags' => ['nullable', 'array'],
+                'tags.*' => ['exists:tags,id'],
             ];
         } else {
             return [
                 'title' => ['sometimes', 'required'],
-                'description' => ['sometimes', 'required']
+                'description' => ['sometimes', 'required'],
+                'category_id' => ['sometimes', 'required', 'exists:categories,id'],
+                'tags' => ['sometimes', 'nullable', 'array'],
+                'tags.*' => ['sometimes', 'exists:tags,id'],
             ];
         }
     }

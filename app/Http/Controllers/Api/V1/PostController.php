@@ -9,17 +9,44 @@ use App\Http\Resources\V1\PostResource;
 use App\Http\Requests\V1\StorePostRequest;
 use App\Http\Requests\V1\UpdatePostRequest;
 use App\Http\Resources\V1\PostCollection;
+use App\Models\Tag;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return new PostCollection(Post::all());
+        // return new PostCollection(Post::all());
+        $posts = QueryBuilder::for(Post::class)
+            ->allowedIncludes(['category', 'tags', 'user'])
+            ->allowedFilters([
+                'title',
+                'category.name',
+                'tags.name',
+                'user.name'
+            ])
+            ->get();
+        return new PostCollection($posts);
+
+        // return new PostCollection($posts->paginate()->appends($request->query()));
     }
 
     public function store(StorePostRequest $request)
     {
-        return new PostResource(Post::create($request->all()));
+        $user = auth()->user();
+        $post = Post::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'category_id' => $request->input('category_id'),
+            'user_id' => $user->id,
+        ]);
+
+        if ($request->has('tags')) {
+            $post->tags()->attach($request->tags);
+        }
+        return new PostResource($post);
+        // return new PostResource(Post::create($request->all()));
     }
 
     public function show(Post $post)
@@ -29,9 +56,23 @@ class PostController extends Controller
 
     public function update(UpdatePostRequest $request, Post $post)
     {
+        if ($post->user_id !== auth()->id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
         $post->update($request->all());
         return response()->json([
             'message' => 'Post Updated Successfully'
         ], 200);
+    }
+
+
+    public function destroy(Post $post)
+    {
+        if ($post->user_id !== auth()->id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        $post->delete();
+        return response()->json(['message' => 'Post deleted successfully']);
     }
 }

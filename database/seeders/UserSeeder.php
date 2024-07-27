@@ -67,11 +67,11 @@ class UserSeeder extends Seeder
 
         $author_role->givePermissionTo(
             [
-                $user_list,
-                $user_create,
-                $user_view,
-                $user_update,
-                $user_delete,
+                $post_list,
+                $post_create,
+                $post_view,
+                $post_update,
+                $post_delete,
                 $comment_list,
                 $comment_create,
                 $comment_view,

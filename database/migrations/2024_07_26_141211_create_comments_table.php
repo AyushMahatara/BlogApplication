@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->string('feedback');
-            $table->string('commentable_id')->unsigned();
-            $table->string('commentable_type');
+            $table->morphs('commentable');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

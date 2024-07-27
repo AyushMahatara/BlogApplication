@@ -4,14 +4,14 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePostRequest extends FormRequest
+class StoreTagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check() && auth()->user()->hasRole('admin');
     }
 
     /**
@@ -22,12 +22,7 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string'],
-            'description' => ['required'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'tags' => ['nullable', 'array'],
-            'tags.*' => ['exists:tags,id'],
-
+            'name' => ['required', 'string']
         ];
     }
 }

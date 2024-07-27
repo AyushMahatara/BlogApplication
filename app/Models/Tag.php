@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Tag extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public function posts(): MorphToMany
     {
